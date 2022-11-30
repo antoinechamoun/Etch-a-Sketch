@@ -60,16 +60,18 @@ function handleRange(value){
 //Change background function
 function changeBackground(e){
     let choice = e.srcElement.className
-    if(e.srcElement.id!='gridSquare'){
-        return
-    }
-    const isRainbow = document.querySelector('#rainbow')
-    if(isRainbow.className == 'selected'){
-        colorRGB = `rgb(${Math.round(Math.random()*255)},${Math.round(Math.random()*255)},${Math.round(Math.random()*255)})`
-    }
-    console.log();
-    const gridSelected = document.querySelector(`.${choice}`)
-    gridSelected.style.background = colorRGB
+    if((e.target.offsetParent.className=='right active')){
+
+        if(e.srcElement.id!='gridSquare'){
+            return
+        }
+        const isRainbow = document.querySelector('#rainbow')
+        if(isRainbow.className == 'selected'){
+            colorRGB = `rgb(${Math.round(Math.random()*255)},${Math.round(Math.random()*255)},${Math.round(Math.random()*255)})`
+        }
+        const gridSelected = document.querySelector(`.${choice}`)
+        gridSelected.style.background = colorRGB
+}
 }
 
 //Color eventListener
@@ -90,6 +92,12 @@ range.addEventListener('change',handleRange)
 //grids onClick
 const allGrids = document.querySelectorAll('gridSquare')
 window.addEventListener('mouseover', changeBackground)
+
+const paper = document.getElementById('right')
+paper.addEventListener('mousedown', ()=>paper.classList.add('active'))
+paper.addEventListener('mouseup', ()=>paper.classList.remove('active'))
+paper.addEventListener('mouseleave', ()=>paper.classList.remove('active'))
+paper.addEventListener("dragstart", (e) => e.preventDefault());
 
 if(count == 0){
     handleRange(16)
